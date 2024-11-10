@@ -1,0 +1,52 @@
+package SlidingWindow;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+public class first_negative_integer_in_subarray {
+    public static int[] getArray(int[] nums, int size, int win){
+        List<Integer> store = new ArrayList<Integer>();
+        int[] result = new int[size - win + 1];//intialize final arrayl
+        int i = 0;//start
+        int j = 0;//end
+        while(j<size){
+            if(nums[j] < 0){
+                store.add(nums[j]);
+            }
+            if(j - i + 1 < win){
+                j++;
+            }
+            else if(j - i + 1 == win){
+                if(store.isEmpty()){
+                    result[i] = 0;
+                }
+                else{
+                    result[i] = store.getFirst();
+                    if(nums[i] == store.getFirst()) {  //  if the first element is slided then we have to check if the first element is present or not .
+                        store.removeFirst();
+                    }
+                }
+                i++;
+                j++;
+            }
+        }
+        return result ;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the size of the array");
+        int s = sc.nextInt();
+        int[] nums = new int[s];
+        System.out.println("Enter the elements of the array");
+        for (int i = 0; i < s; i++) {
+            nums[i] = sc.nextInt();
+        }
+        System.out.println("Enter the window size");
+        int win = sc.nextInt();
+
+        int[] result = getArray(nums, s, win);
+        System.out.println(Arrays.toString(result));
+    }
+}
